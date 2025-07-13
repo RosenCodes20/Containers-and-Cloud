@@ -1,0 +1,1 @@
+docker run --name my-apache-app -d -p 8080:80 -v /Users/macbookpro16/Vs_code/apache:/usr/local/apache2/htdocs httpd:latest

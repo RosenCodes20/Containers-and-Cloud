@@ -1,0 +1,38 @@
+services:
+    mysql:
+        stdin_open: true
+        tty: true
+        container_name: wordpress_db
+        environment:
+            - MYSQL_ROOT_PASSWORD=pass
+            - MYSQL_DATABASE=wordpressdb
+            - MYSQL_USER=wordpress
+            - MYSQL_PASSWORD=wordpress
+        expose:
+            - 3306
+            - 33060
+        networks:
+            - my_network
+        volumes:
+            - /Users/macbookpro16/Vs_code/volume:/var/lib/mysql
+        image: mysql
+    wordpress:
+        stdin_open: true
+        tty: true
+        container_name: wordpress-website
+        environment:
+            - WORDPRESS_DB_HOST=wordpress_db
+            - WORDPRESS_DB_USER=wordpress
+            - WORDPRESS_DB_PASSWORD=wordpress
+            - WORDPRESS_DB_NAME=wordpressdb
+        ports:
+            - 80:80
+        volumes:
+            - /Users/macbookpro16/Vs_code/volume_wordpress:/var/www/html
+        networks:
+            - my_network
+        image: wordpress
+networks:
+    my_network:
+        external: true
+        name: my_network

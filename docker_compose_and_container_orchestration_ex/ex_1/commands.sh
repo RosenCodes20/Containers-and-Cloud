@@ -17,3 +17,17 @@ CREATE TABLE test_table (id INT, name VARCHAR(100));
 INSERT INTO test_table (id, name) VALUES (1, 'Test Name');
 INSERT INTO test_table (id, name) Values (2, "Rosen");
 SELECT * FROM test_table;
+
+#Variant 2
+
+apt install mariadb-client mariadb-common
+mariadb -h mariadb_server -u root -p 
+
+#SHOULD RETURN SQL TERM, OUTPUT:
+MariaDB [(none)]> select VERSION();
++------------------------+
+| VERSION()              |
++------------------------+
+| 11.8.2-MariaDB-ubu2404 |
++------------------------+
+1 row in set (0.001 sec)

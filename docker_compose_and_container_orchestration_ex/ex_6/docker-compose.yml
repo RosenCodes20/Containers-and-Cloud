@@ -1,0 +1,27 @@
+# named network 'taskboard_network' is marked as "external" (used by service 'server'), so either remove "external" from network definition or it needs to be created using: docker network create -d bridge taskboard_network
+
+# named network 'taskboard_network' is marked as "external" (used by service 'taskboard_image'), so either remove "external" from network definition or it needs to be created using: docker network create -d bridge taskboard_network
+services:
+    server:
+        environment:
+            - ACCEPT_EULA=Y
+            - MSSQL_SA_PASSWORD=myStrongPassword1234
+        ports:
+            - 1433:1433
+        volumes:
+            - /Users/macbookpro16/Vs_code/Containers-and-Cloud/docker_compose_and_container_orchestration_ex/ex_4/data:/var/opt/mssql
+        networks:
+            - taskboard_network
+        container_name: sqlserver
+        image: mcr.microsoft.com/mssql/server:latest
+    taskboard_image:
+        networks:
+            - taskboard_network
+        ports:
+            - 5005:80
+        container_name: web_app
+        image: rosenbg1234/taskboard_image
+networks:
+    taskboard_network:
+        external: true
+        name: taskboard_network

@@ -1,0 +1,54 @@
+# named network 'frontend' is marked as "external" (used by service 'example-voting-app-vote'), so either remove "external" from network definition or it needs to be created using: docker network create -d bridge frontend
+
+# named network 'backend' is marked as "external" (used by service 'worker_image'), so either remove "external" from network definition or it needs to be created using: docker network create -d bridge backend
+
+# named network 'backend' is marked as "external" (used by service 'redis'), so either remove "external" from network definition or it needs to be created using: docker network create -d bridge backend
+
+# named network 'backend' is marked as "external" (used by service 'postgres'), so either remove "external" from network definition or it needs to be created using: docker network create -d bridge backend
+
+# named network 'frontend' is marked as "external" (used by service 'example-voting-app-result'), so either remove "external" from network definition or it needs to be created using: docker network create -d bridge frontend
+services:
+    example-voting-app-vote:
+        container_name: voting
+        networks:
+            - frontend
+            - backend
+        ports:
+            - 5002:80
+        image: rosenbg1234/example-voting-app-vote:latest
+    worker_image:
+        container_name: worker
+        networks:
+            - backend
+        image: worker_image:latest
+    redis:
+        container_name: redis
+        networks:
+            - backend
+        ports:
+            - 6379:6379
+        image: redis:latest
+    postgres:
+        container_name: postgres
+        networks:
+            - backend
+        environment:
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=mysecretpassword
+            - POSTGRES_DB=mydatabase
+        volumes:
+            - /Users/macbookpro16/Vs_code/Containers-and-Cloud/docker_compose_and_container_orchestration_ex/ex_7/data:/var/lib/postgresql/data    
+        ports:
+            - 5433:5432
+        image: postgres:latest
+    example-voting-app-result:
+        container_name: result
+        ports:
+            - 5001:80
+        networks:
+            - frontend
+            - backend
+        image: rosenbg1234/example-voting-app-result:latest
+networks:
+    frontend:
+    backend:

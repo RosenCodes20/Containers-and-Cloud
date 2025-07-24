@@ -1,0 +1,10 @@
+services:
+    simpleapp:
+        container_name: web
+        ports:
+            - 8000:8000
+        volumes:
+            - /Users/macbookpro16/Vs_code/Containers-and-Cloud/docker_compose_and_container_orchestration_ex/ex_9/data:/app/staticfiles
+        environment:
+            - DEBUG=False
+        image: simpleapp:latest

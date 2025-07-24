@@ -1,0 +1,34 @@
+
+
+services:
+  reseller-app:
+    image: rosenbg1234/resellapp:latest
+    container_name: reseller-app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql-db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/resellerapp?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: rootpassword
+    networks:
+      - backend_reseller
+
+  mysql-db:
+    image: mysql:8.0
+    container_name: mysql-db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: resellerapp
+      MYSQL_USER: user
+      MYSQL_PASSWORD: userpass
+    volumes:
+      - /Users/macbookpro16/Vs_code/Containers-and-Cloud/docker_compose_and_container_orchestration_ex/ex_8/data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - backend_reseller
+
+networks:
+  backend_reseller:

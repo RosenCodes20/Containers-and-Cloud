@@ -1,0 +1,1 @@
+resource_group_name = "taskboardRosen-${random_integer.ri.result}"

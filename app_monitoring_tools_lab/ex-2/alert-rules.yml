@@ -1,0 +1,10 @@
+groups:
+  - name: connection was slow
+    rules:
+      - alert: SlowConnection
+        expr: probe_http_duration_seconds{phase="connect"} > 0.0000025
+        for: 3s
+        labels:
+          severity: warning
+        annotations:
+          summary: "Connection too slow during HTTP probe"
